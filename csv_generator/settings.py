@@ -139,7 +139,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 
-CELERY_BROKER_URL = 'redis://idkcjfxcqoejpo:59e61f70e60bb00154759ef21d3e2cd325f3637c4dba9f4dd25268fa2938bfaf@ec2-44-194-68-175.compute-1.amazonaws.com:5432/d6macgr8f51lk0'
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
 
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TAST_SERIALIZER = 'json'
