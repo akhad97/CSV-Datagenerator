@@ -1,3 +1,3 @@
-release: python manage.py migrate --no-input
-web: gunicorn csv_generator.wsgi
-worker: celery -A csv_generator.celery worker -B --loglevel=info
+web: gunicorn csv_generator.wsgi --log-file -
+worker: celery -A csv_generator worker -B --loglevel=info
+python manage.py celeryd -v 2 -B -s celery -E -l INFO
