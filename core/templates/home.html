@@ -1,0 +1,217 @@
+{% extends 'base.html' %}
+{% load static %}
+<head>
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.0/normalize.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pixeden-stroke-7-icon@1.2.3/pe-icon-7-stroke/dist/pe-icon-7-stroke.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.2.0/css/flag-icon.min.css">
+    <link rel="stylesheet" href='{% static "assets/css/cs-skin-elastic.css" %}'>
+    <link rel="stylesheet" href='{% static "assets/css/lib/datatable/dataTables.bootstrap.min.css" %}'>
+    <link rel="stylesheet" href='{% static "assets/css/style.css" %}'>
+
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
+</head>
+{% block content %}
+<div class="container-fluid">
+    
+
+  <div class="d-flex mt-5">
+      <div>
+         <h1 class="col-sm-0">Data schemes</h1>
+      </div>
+      <div class="ml-auto">
+         <a href="{% url 'scheme-create' %}" class=" btn btn-success">New schema</a>
+      </div>
+ </div>
+
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Title</th>
+      <th scope="col">Modified</th>
+      <th scope="col">Value of Columns</th>
+      <th scope="col">Name of Columns</th>
+      <th scope="col">Order of Columns</th>
+      <th scope="col">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+
+{% for scheme in schemes %}
+                                        <tr>
+                                            <td>{{ scheme.id }}</td>
+                                            <td>{{ scheme.name }}</td>
+                                            <td>{{ scheme.add_date }}</td>
+                                             <td>
+{% if scheme.type1 == '1' %} 
+{% elif scheme.type1 == '2' %} name, 
+{% elif scheme.type1 == '3' %} job,
+{% elif scheme.type1 == '4' %} company,
+{% elif scheme.type1 == '5' %} phone,
+{% elif scheme.type1 == '6' %} address, 
+{% elif scheme.c1 == '7' %} email,
+{% endif %}
+
+
+{% if scheme.type2 == '1' %} 
+{% elif scheme.type2 == '2' %} name, 
+{% elif scheme.type2 == '3' %} job,
+{% elif scheme.type2 == '4' %} company,
+{% elif scheme.type2 == '5' %} phone,
+{% elif scheme.type2 == '6' %} address, 
+{% elif scheme.type2 == '7' %} email,
+{% endif %}
+
+{% if scheme.type3 == '1' %} 
+{% elif scheme.type3 == '2' %} name, 
+{% elif scheme.type3 == '3' %} job,
+{% elif scheme.type3 == '4' %} company,
+{% elif scheme.type3 == '5' %} phone,
+{% elif scheme.type3 == '6' %} address, 
+{% elif scheme.type3 == '7' %} email,
+{% endif %}
+
+{% if scheme.type4 == '1' %} 
+{% elif scheme.type4 == '2' %} name, 
+{% elif scheme.type4 == '3' %} job,
+{% elif scheme.type4 == '4' %} company,
+{% elif scheme.type4 == '5' %} phone,
+{% elif scheme.type4 == '6' %} address, 
+{% elif scheme.type4 == '7' %} email,
+{% endif %}
+
+{% if scheme.type5 == '1' %} 
+{% elif scheme.type5 == '2' %} name, 
+{% elif scheme.type5 == '3' %} job,
+{% elif scheme.type5 == '4' %} company,
+{% elif scheme.type5 == '5' %} phone,
+{% elif scheme.type5 == '6' %} address, 
+{% elif scheme.type5 == '7' %} email,
+{% endif %}
+
+{% if scheme.type6 == '1' %} 
+{% elif scheme.type6 == '2' %} name, 
+{% elif scheme.type6 == '3' %} job,
+{% elif scheme.type6 == '4' %} company,
+{% elif scheme.type6 == '5' %} phone,
+{% elif scheme.type6 == '6' %} address, 
+{% elif scheme.type6 == '7' %} email,
+{% endif %}
+
+
+</td>
+<td>
+{% if scheme.col_name1 != 'None' %}
+{{ scheme.col_name1 }},
+{% endif %}
+
+{% if scheme.col_name2 != 'None' %}
+{{ scheme.col_name2}},
+{% endif %}
+
+{% if scheme.col_name3 != 'None' %}
+{{ scheme.col_name3 }},
+{% endif %}
+
+{% if scheme.col_name4 != 'None' %}
+{{ scheme.col_name4 }},
+{% endif %}
+
+{% if scheme.col_name5 != 'None' %}
+{{ scheme.col_name5 }},
+{% endif %}
+
+{% if scheme.col_name6 != 'None' %}
+{{ scheme.col_name6 }},
+{% endif %}
+
+
+
+                                            <td>
+{% if scheme.order1 != 0 %}
+{{ scheme.order1 }},
+{% endif %}
+
+{% if scheme.order2 != 0 %}
+{{ scheme.order2 }},
+{% endif %}
+
+{% if scheme.order3 != 0 %}
+{{ scheme.order3 }},
+{% endif %}
+
+{% if scheme.order4 != 0 %}
+{{ scheme.order4 }},
+{% endif %}
+
+{% if scheme.order5 != 0 %}
+{{ scheme.order5 }},
+{% endif %}
+
+{% if scheme.order6 != 0 %}
+{{ scheme.order6 }},
+{% endif %}
+
+</td>  
+                                            
+
+
+
+
+
+                                            <td>
+<a href="/./edit/{{ scheme.id }}/"><button  class="btn btn-secondary ">Edit</button></a> 
+<a href="/./delete/{{ scheme.id }}/"><button class="btn btn-danger">Delete</button></a>
+
+                                            </td>
+                                           {% endfor %}
+  </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+
+        <div class="clearfix"></div>
+
+    </div>
+
+  </tbody>
+</table>
+</div>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@2.2.4/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.4/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-match-height@0.7.2/dist/jquery.matchHeight.min.js"></script>
+    <script src='{% static "assets/js/main.js" %}'></script>
+
+
+    <script src='{% static "assets/js/lib/data-table/datatables.min.js" %}'></script>
+    <script src='{% static "assets/js/lib/data-table/dataTables.bootstrap.min.js" %}'></script>
+    <script src='{% static "assets/js/lib/data-table/dataTables.buttons.min.js" %}'></script>
+    <script src='{% static "assets/js/lib/data-table/buttons.bootstrap.min.js" %}'></script>
+    <script src='{% static "assets/js/lib/data-table/jszip.min.js"  %}'></script>
+    <script src='{% static "assets/js/lib/data-table/vfs_fonts.js"  %}'></script>
+    <script src='{% static "assets/js/lib/data-table/buttons.html5.min.js" %}'></script>
+    <script src='{% static "assets/js/lib/data-table/buttons.print.min.js" %}'></script>
+    <script src='{% static "assets/js/lib/data-table/buttons.colVis.min.js" %}'></script>
+    <script src='{% static "assets/js/init/datatables-init.js" %}'></script>
+
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+          $('#bootstrap-data-table-export').DataTable();
+      } );
+  </script>
+{% endblock  %}
