@@ -29,6 +29,7 @@
   <thead>
     <tr>
       <th scope="col">#</th>
+      <th scope="col">Name</th>
       <th scope="col">Created</th>
       <th scope="col">Status</th>
       <th scope="col">Actions</th>
@@ -39,6 +40,7 @@
 {% for scheme in schemes %}
                                         <tr>
                                             <td>{{ scheme.id }}</td>
+                                            <td>{{ scheme.name }}</td>
                                             <td>{{ scheme.add_date }}</td>
      
                                             <td>{% if scheme.upload == '' %}

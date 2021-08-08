@@ -4,13 +4,14 @@ from .models import *
 import datetime
 from django.views.generic import  UpdateView, DeleteView
 from .tasks import datagenerate
+from django.contrib.auth.decorators import login_required
 
 
 def load(request):
     task = go_to_sleep.delay(1)
     return render(request, 'load.html', {'task_id': task.task_id})
 
-
+@login_required
 def home_view(request):
     user = request.user
     schemes = Scheme.objects.filter(author=user)
@@ -30,7 +31,7 @@ def scheme_create(request):
         form = SchemeForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('home')        
+            return redirect('/')        
 
     return render(request, 'scheme.html', {'form': form})
 
@@ -39,7 +40,7 @@ def scheme_create(request):
 class SchemeEditView(UpdateView):
     template_name = "scheme-edit.html"
     form_class = SchemeForm
-    success_url = '/home/'
+    success_url = '/'
 
     def get_object(self):
         id_ = self.kwargs.get("id")
@@ -48,14 +49,14 @@ class SchemeEditView(UpdateView):
 
 class SchemeDeleteView(DeleteView):
     template_name = "scheme-delete.html"
-    success_url = '/home/'
+    success_url = '/'
 
     def get_object(self):
         id_ = self.kwargs.get("id")
         return get_object_or_404(Scheme, id=id_)
 
     def get_success_url(self):
-        return "/home/"
+        return "/"
 
 
 def do(request, id=None):
