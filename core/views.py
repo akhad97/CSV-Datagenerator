@@ -80,12 +80,12 @@ def do(request, id=None):
 
     # Replace IDs with names
     col_names = {'1': 'Choose...',
-                 '2': 'name',
-                 '3': 'job',
-                 '4': 'company',
-                 '5': 'phone',
-                 '6': 'address',
-                 '7': 'email', }
+                 '2': 'string',
+                 '3': 'int',
+                 '4': 'bool',
+                 '5': 'list',
+                 '6': 'float',
+                 '7': 'tuple', }
 
     def replace(list, dictionary):
         for idx, val in enumerate(list):
@@ -139,18 +139,11 @@ def do(request, id=None):
         columns = [x for _, x in sorted(zip(order, columns))]
         names = [x for _, x in sorted(zip(order, names))]
 
-    print('Columns in order: ')
-    print(columns)
-    print(names)
-
-    rows = scheme.rows
-    print('Number of rows:')
-    print(rows)
+   
 
     filename = str(scheme.author) + '_' + str(scheme.name) + '_' + str(datetime.datetime.today().strftime('%Y-%m-%d_%H-%M-%S')) + '.csv'
 
-    task = datagenerate.delay(rows, columns, names, filename, scheme_id)
-    print(filename)
+    task = datagenerate.delay(columns, names, filename, scheme_id)
 
     return render(request, 'load.html', {'task_id': task.task_id})
 

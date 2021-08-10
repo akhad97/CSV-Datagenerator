@@ -13,7 +13,7 @@ urlpatterns = [
     path('edit/<id>/', views.SchemeEditView.as_view(), name='scheme-edit'),
     path('delete/<int:id>/', views.SchemeDeleteView.as_view(), name='scheme-delete'),
     path('celery-progress/', include('celery_progress.urls')),
-    path('generate_data', views.generate_view, name='generate_data'),
+    path('generate-data', views.generate_view, name='generate-data'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

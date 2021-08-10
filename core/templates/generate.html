@@ -44,11 +44,11 @@
                                             <td>{{ scheme.add_date }}</td>
      
                                             <td>{% if scheme.upload == '' %}
-<button class="btn btn-secondary pl-4 pr-4">Processing</button>
-{% elif scheme.upload == 'In Progress' %}
-<button class="btn btn-secondary pl-4 pr-4">Processing</button>
+<span style='background-color: #808080; color:#fff' class="p-1">Processing</span>
+{% elif scheme.upload == "In Progress"  %}
+<span style='background-color: #808080; color:#fff' class="p-1">Processing</span>
 {% else %}
-<button class="btn btn-success pl-4 pr-4"> Ready </button>
+<span style='background-color: #28a745; color:#fff' class="p-1"> Ready </span>
 {% endif %}</td>
 
 
@@ -58,8 +58,8 @@
                                             <td>
                                              {% if scheme.upload == '' %}
 <a  href="/./do/{{ scheme.id }}/"><button class="btn btn-success ">Generate CSV</button></a>
-{% elif scheme.upload == 'In Progress' %}
-<button class="button buttongr" disabled>Generate CSV</button>
+{% elif scheme.upload == "In Progress"  %}
+<button class="button buttongr" style="display:none">Generate CSV</button>
 {% else %}
 <a href="/./do/{{ scheme.id }}/"><button class="btn btn-success" style='display:none'>Generate CSV</button></a>
 {% endif %} 
@@ -70,8 +70,8 @@
 
 {% if scheme.upload == '' %}
 <button class="btn btn-primary " style='display:none' >Download</button>
-{% elif scheme.upload == 'In Progress' %}
-<button class="btn btn-secondary" style='display:none'>Download</button>
+{% elif scheme.upload == "In Progress" %}
+<button class="btn btn-primary" style='display:none'>Download</button>
 {% else %}
 <a href="{{ scheme.upload }}"><button class="btn btn-primary">Download</button></a>
 {% endif %}
