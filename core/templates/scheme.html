@@ -1,165 +1,105 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load crispy_forms_tags %}
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
 {% block content %}
 <div class="container mt-3 mb-5">
 <h1>New Schema</h1>
 
-
- <form style="LINE-HEIGHT: 20px;" method='POST', enctype="multipart/form-data" >
-
-   {% csrf_token %} 
-  
+    <form method="POST" action="" >
+        {% csrf_token %}
+        
     
-  <div class="row">
-    <div class="form-group col-lg-5 mb-0">
-                            {{ form.name|as_crispy_field }}
-                            {{ form.column_seperator|as_crispy_field }}
-                            {{ form.string_character|as_crispy_field }}
-                        </div>
-
-    <div class="form-group col-lg-5 mb-0">
+    <div class="row">
+    <div class="form-group col-lg-5 m-0">
+         {{ form.name|as_crispy_field }}
+         {{ form.column_seperator|as_crispy_field }}
+         {{ form.string_character|as_crispy_field }}
                             
                         </div>
 
+    <div class="form-group col-lg-5 m-0"> 
+                        </div>
     
-    <div class="form-group col-lg-2 mb-0">
+    <div class="form-group col-lg-2 m-0">
                             <button class="btn btn-primary mt-4" type="submit">Submit</button>
                         </div>                    
   </div>
-    
 
     <h1 class="mt-5 mb-5">Scheme Columns</h1>
-
-    <div class="row" id=""> 
-        <div class="form col-lg-3 mb-0">
-            {{ form.col_name1|as_crispy_field }}
-        </div>
-        <div class="form-group col-lg-3 mb-0">
-            {{ form.type1|as_crispy_field }}
-        </div>
-        <div class="form-group col-lg-3 mb-0">
-            {{ form.order1|as_crispy_field }}
+    <div class="form-group fieldGroup">
+        <div class="input-group">
+            <div class="row form-row spacer" id="playerFrmTableId"> 
+                <div class="form-group mr-4 mb-0" style="width:300px;">
+                    {{ form.col_name|as_crispy_field }}
+                </div>
+                <div class="form-group mr-4 mb-0" style="width:300px;" >
+                    {{ form.type|as_crispy_field }}
+                </div>
+                <div class="form-group mr-4 mb-0" style="width:300px;">
+                    {{ form.order|as_crispy_field }}
+                </div>
+                
+            </div>
+            
         </div>
     </div>
-    
-    <details  onclick="getElementById('2').style.display = 'none' ">    
-    <summary id='2'>Add column</summary>
-    <div id=''>
-    <div class="row" id="demo"> 
-        <div class="col-lg-3 mb-0">
+     <a  href="javascript:void(0)" id="add-form" class="btn btn-success addMore" style="margin-left:-15px ;">
+        <span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span> Add Column</a>
+    </form>
+
+    <!-- copy of input fields group -->
+<div class="form-group fieldGroupCopy" style="display: none;">
+    <div class="input-group">
+        <div class="form-group mr-4 mb-0" style="width:300px;">
             {{ form.col_name2|as_crispy_field }}
         </div>
-        <div class=" col-lg-3 mb-0">
+        <div class="form-group mr-4 mb-0" style="width:300px;" >
             {{ form.type2|as_crispy_field }}
         </div>
-        <div class="col-lg-3 mb-0">
+        <div class="form-group mr-4 mb-0" style="width:300px;">
             {{ form.order2|as_crispy_field }}
         </div>
-        <div class="col-lg-3 mt-4">
-            <button  class="col-lg-3 btn btn-danger" onclick="myFunction()">Delete</button>
+        <div class="input-group-addon"> 
+            <a href="javascript:void(0)" class="btn btn-danger remove" style="margin-top: 30px;"><span class="glyphicon glyphicon glyphicon-remove" aria-hidden="true"></span> Remove</a>
         </div>
     </div>
-    </div>
-
-      
-    <details  onclick="getElementById('3').style.display = 'none' ">
-    <summary id='3'>Add column</summary>
-    <div id=''>
-    <div class="row" id="demo"> 
-        <div class="form col-lg-3 mb-0">
-            {{ form.col_name3|as_crispy_field }}
-        </div>
-        <div class="form-group col-lg-3 mb-0">
-            {{ form.type3|as_crispy_field }}
-        </div>
-        <div class="form-group col-lg-3 mb-0">
-            {{ form.order3|as_crispy_field }}
-        </div>
-        <div class="col-lg-3 mt-4">
-            <button  class="col-lg-3 btn btn-danger" onclick="myFunction()">Delete</button>
-        </div>
-    </div>
-    </div>
+</div>
+    
 
 
-    <details  onclick="getElementById('4').style.display = 'none' ">
-    <summary id='4'>Add column</summary>
-    <div id=''>
-    <div class="row" id="demo"> 
-        <div class="form col-lg-3 mb-0">
-            {{ form.col_name4|as_crispy_field }}
-        </div>
-        <div class="form-group col-lg-3 mb-0">
-            {{ form.type4|as_crispy_field }}
-        </div>
-        <div class="form-group col-lg-3 mb-0">
-            {{ form.order4|as_crispy_field }}
-        </div>
-        <div class="col-lg-3 mt-4">
-            <button  class="col-lg-3 btn btn-danger" onclick="myFunction()">Delete</button>
-        </div>
-    </div>
-    </div>
-
-    <details  onclick="getElementById('5').style.display = 'none' ">
-    <summary id='5'>Add column</summary>
-    <div id=''>
-    <div class="row" id="demo"> 
-        <div class="form col-lg-3 mb-0">
-            {{ form.col_name5|as_crispy_field }}
-        </div>
-        <div class="form-group col-lg-3 mb-0">
-            {{ form.type5|as_crispy_field }}
-        </div>
-        <div class="form-group col-lg-3 mb-0">
-            {{ form.order5|as_crispy_field }}
-        </div>
-        <div class="col-lg-3 mt-4">
-            <button  class="col-lg-3 btn btn-danger" onclick="myFunction()">Delete</button>
-        </div>
-    </div>
-    </div>
-
-
-    <details  onclick="getElementById('6').style.display = 'none' ">
-    <summary id='6'>Add column</summary>
-    <div id=''>
-    <div class="row" id="demo"> 
-        <div class="form col-lg-3 mb-0">
-            {{ form.col_name6|as_crispy_field }}
-        </div>
-        <div class="form-group col-lg-3 mb-0">
-            {{ form.type6|as_crispy_field }}
-        </div>
-        <div class="form-group col-lg-3 mb-0">
-            {{ form.order6|as_crispy_field }}
-        </div>
-        <div class="col-lg-3 mt-4">
-            <button  class="col-lg-3 btn btn-danger" onclick="myFunction()">Delete</button>
-        </div>
-    </div>
-    </div>
-
-    <details  onclick="getElementById('').style.display = 'none' ">
-    <summary id=''>Add column</summary>
-    </div>
-
-
-    </details>
-    </details>
-    </details>
-    </details>
-    </details>
-    </details>
-   
-</form> 
 
 </div> <br>
 <script>
-   function myFunction(){
-       var obj = document.getElementById('demo')
-       obj.remove()
-   }
+    $(document).ready(function(){
+    //group add limit
+    var maxGroup = 10;
+    
+    //add more fields group
+    $(".addMore").click(function(){
+        if($('body').find('.fieldGroup').length < maxGroup){
+            var fieldHTML = '<div class="form-group fieldGroup">'+$(".fieldGroupCopy").html()+'</div>';
+            $('body').find('.fieldGroup:last').after(fieldHTML);
+        }else{
+            alert('Maximum '+maxGroup+' groups are allowed.');
+        }
+    });
+    
+    //remove fields group
+    $("body").on("click",".remove",function(){ 
+        $(this).parents(".fieldGroup").remove();
+    });
+});
 </script>
+
+
+<!-- <script>
+    $("body").on("click",".remove",function(){ 
+        $(this).parents(".fieldGroup").remove();
+    });
+ </script> -->
+
+
 {% endblock %}

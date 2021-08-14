@@ -2,16 +2,18 @@ from django.shortcuts import redirect, render, get_object_or_404
 from .forms import *
 from .models import *
 import datetime
-from django.views.generic import  UpdateView, DeleteView
+from django.views.generic import  UpdateView, DeleteView, TemplateView, ListView
 from .tasks import datagenerate
-from django.contrib.auth.decorators import login_required
+from django.urls import reverse_lazy
+from django.forms import modelformset_factory
+from django.http import HttpResponseRedirect, HttpResponse, request
 
 
 def load(request):
     task = go_to_sleep.delay(1)
     return render(request, 'load.html', {'task_id': task.task_id})
 
-@login_required
+
 def home_view(request):
     user = request.user
     schemes = Scheme.objects.filter(author=user)
@@ -24,23 +26,20 @@ def generate_view(request):
     return render(request, 'generate.html', {'schemes':schemes})
 
 
-
 def scheme_create(request):  
     form = SchemeForm()  
     if request.method == 'POST':
         form = SchemeForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('/')        
-
-    return render(request, 'scheme.html', {'form': form})
-
+            return redirect('home')        
+    return render(request, 'scheme.html', {'form':form})
 
 
 class SchemeEditView(UpdateView):
     template_name = "scheme-edit.html"
     form_class = SchemeForm
-    success_url = '/'
+    success_url = '/home/'
 
     def get_object(self):
         id_ = self.kwargs.get("id")
@@ -49,14 +48,14 @@ class SchemeEditView(UpdateView):
 
 class SchemeDeleteView(DeleteView):
     template_name = "scheme-delete.html"
-    success_url = '/'
+    success_url = '/home/'
 
     def get_object(self):
         id_ = self.kwargs.get("id")
         return get_object_or_404(Scheme, id=id_)
 
     def get_success_url(self):
-        return "/"
+        return "/home/"
 
 
 def do(request, id=None):
@@ -71,15 +70,11 @@ def do(request, id=None):
     # Get columns
     columns = []
 
-    columns.append(scheme.type1)
+    columns.append(scheme.type)
     columns.append(scheme.type2)
-    columns.append(scheme.type3)
-    columns.append(scheme.type4)
-    columns.append(scheme.type5)
-    columns.append(scheme.type6)
 
     # Replace IDs with names
-    col_names = {'1': 'Choose...',
+    col_names = {'1': 'Select...',
                  '2': 'string',
                  '3': 'int',
                  '4': 'bool',
@@ -92,22 +87,16 @@ def do(request, id=None):
             list[idx] = dictionary[list[idx]]
         return list
     replace(columns, col_names)
-    while 'Choose...' in columns:
-        columns.remove('Choose...')
+    while 'Select...' in columns:
+        columns.remove('Select...')
 
-    print ('Columns: ')
-    print(columns)
 
     # NAMES
     # Get names
     names = []
 
-    names.append(scheme.col_name1)
+    names.append(scheme.col_name)
     names.append(scheme.col_name2)
-    names.append(scheme.col_name3)
-    names.append(scheme.col_name4)
-    names.append(scheme.col_name5)
-    names.append(scheme.col_name6)
 
     while '' in names:
         names.remove('')
@@ -115,35 +104,25 @@ def do(request, id=None):
     while 'None' in names:
         names.remove('None')
 
-    print('Names of columns: ')
-    print(names)
-
     # ORDER
     # Get order
     order = []
 
-    order.append(scheme.order1)
+    order.append(scheme.order)
     order.append(scheme.order2)
-    order.append(scheme.order3)
-    order.append(scheme.order4)
-    order.append(scheme.order5)
-    order.append(scheme.order6)
 
     while 0 in order:
         order.remove(0)
-
-    print('Order: ')
-    print(order)
 
     if order:
         columns = [x for _, x in sorted(zip(order, columns))]
         names = [x for _, x in sorted(zip(order, names))]
 
-   
+    rows = scheme.rows
 
     filename = str(scheme.author) + '_' + str(scheme.name) + '_' + str(datetime.datetime.today().strftime('%Y-%m-%d_%H-%M-%S')) + '.csv'
 
-    task = datagenerate.delay(columns, names, filename, scheme_id)
+    task = datagenerate.delay(rows, columns, names, filename, scheme_id)
 
     return render(request, 'load.html', {'task_id': task.task_id})
 
